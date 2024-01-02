@@ -1,5 +1,3 @@
-local FileHandler = require("FileHandler")
-
 local ELFHeader = {}
 
 
