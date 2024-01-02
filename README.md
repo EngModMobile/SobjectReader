@@ -6,3 +6,5 @@ This tool, written in Lua script, is designed to analyze ELF files in both aarch
    ```bash
    git clone https://github.com/EngModMobile/SobjectReader.git
    ```
+##License
+This project is licensed under the MIT License. Feel free to contribute or report issues!
