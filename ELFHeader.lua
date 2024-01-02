@@ -6,7 +6,7 @@ function ELFHeader:new(readerFile)
     self._readerFile = readerFile
     setmetatable(object, self)
     self.__index = self
-    return obj
+    return object
 end
 
 function ELFHeader:readSectionHeaderTableInformation()
