@@ -1,10 +1,10 @@
 local ELFHeader = {}
-ELFHeader.mReaderFile = nil
+ELFHeader._readerFile = nil
 
 function ELFHeader:new(readerFile)
-    local obj = {}
-    self.mReaderFile = readerFile
-    setmetatable(obj, self)
+    local object = {}
+    self._readerFile = readerFile
+    setmetatable(object, self)
     self.__index = self
     return obj
 end
