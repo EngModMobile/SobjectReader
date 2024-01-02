@@ -1,9 +1,9 @@
 local ELFHeader = {}
-ELFHeader.mFileHandler = nil
+ELFHeader.mReaderFile = nil
 
-function ELFHeader:new(fileHandler)
+function ELFHeader:new(readerFile)
     local obj = {}
-    self.mFileHandler = fileHandler
+    self.mReaderFile = readerFile
     setmetatable(obj, self)
     self.__index = self
     return obj
