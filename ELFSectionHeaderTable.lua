@@ -33,7 +33,7 @@ function ELFSectionHeaderTable:readInformationDynamicLinkingSections()
         local sectionType, sectionFlags
         local loopBreaks = 0
         for i = 1, self._sectionHeaderTableInformation.num do
-            sectionHeaderType = self._readerFile:readIntegerByOffset(sectionHeaderOffset + 0x4)
+            sectionHeaderType = self._readerFile:readInteger32FromOffset(sectionHeaderOffset + 0x4)
             sectionHeaderFlags = self._readSectionHeaderFlagsByOffset(sectionHeaderOffset + 0x8)
             if self.mIsDynamicLinkingSymbolSection(sectionHeaderType) then
                 informationDynamicLinkingSections.dynsym = self._readSectionHeaderInformationByOffset(sectionHeaderOffset)
