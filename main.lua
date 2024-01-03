@@ -10,4 +10,7 @@ local binPath = "/storage/emulated/0/libqplay.so"
 local readerFile = ReaderFile:new(nil, binPath, "r")
 readerFile:setBytesHandler(LittleEndianHandler:new())
 local header32 = ELFHeader32:new(nil, readerFile)
-print(header32:readSectionHeaderTableInformation())
+
+local sectionHeader32 = ELFSectionHeaderTable32:new(nil, readerFile, header32)
+local sections = sectionHeader32:readInformationDynamicLinkingSections()
+print(readerFile:readBufferFromOffset(sections.dynstr.offset, sections.dynstr.size))

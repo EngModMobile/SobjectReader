@@ -1,13 +1,11 @@
-local ReaderFile = {
-    mFile = nil,
-    mBytesHandler = nil
-}
+local ReaderFile = {}
 
 function ReaderFile:new(object, filename, mode)
     object = object or {}
+    object.mFile = io.open(filename, mode)
+    object.mBytesHandler = nil
     setmetatable(object, self)
     self.__index = self
-    self.mFile = io.open(filename, mode)
     return object
 end
 

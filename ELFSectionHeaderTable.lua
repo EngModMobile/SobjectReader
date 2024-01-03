@@ -1,13 +1,17 @@
-local ELFSectionHeaderTable = {}
-ELFSectionHeaderTable._readerFile = nil
-ELFSectionHeaderTable._sectionHeaderTableInformation = nil
+local ELFSectionHeaderTable = {
+     _readerFile = nil,
+     _sectionHeaderTableInformation = nil
+}
 
-function ELFSectionHeaderTable:new(readerFile, header)
-    local object = {}
-    self._readerFile = readerFile
-    self._sectionHeaderTableInformation = header:readsectionHeaderTableInformation()
+
+function ELFSectionHeaderTable:new(object, readerFile, header)
+    object = object or {}
     setmetatable(object, self)
     self.__index = self
+    if header and readerFile then
+        self._readerFile = readerFile
+        self._sectionHeaderTableInformation = header:readSectionHeaderTableInformation() 
+    end
     return object
 end
 
@@ -34,12 +38,13 @@ function ELFSectionHeaderTable:readInformationDynamicLinkingSections()
         local loopBreaks = 0
         for i = 1, self._sectionHeaderTableInformation.num do
             sectionHeaderType = self._readerFile:readInteger32FromOffset(sectionHeaderOffset + 0x4)
-            sectionHeaderFlags = self._readSectionHeaderFlagsByOffset(sectionHeaderOffset + 0x8)
-            if self.mIsDynamicLinkingSymbolSection(sectionHeaderType) then
-                informationDynamicLinkingSections.dynsym = self._readSectionHeaderInformationByOffset(sectionHeaderOffset)
+            sectionHeaderFlags = self:_readSectionHeaderFlagsByOffset(sectionHeaderOffset)
+            if self:mIsDynamicLinkingSymbolSection(sectionHeaderType) then
+                informationDynamicLinkingSections.dynsym = self:_readSectionHeaderInformationByOffset(sectionHeaderOffset)
                 loopBreaks = loopBreaks + 1
-            elseif self.mIsDynamicLinkingStringSection(sectionHeaderType, sectionHeaderFlags) then
-                informationDynamicLinkingSections.dynstr = self._readSectionHeaderInformationByOffset(sectionHeaderOffset)
+            elseif self:mIsDynamicLinkingStringSection(sectionHeaderType, sectionHeaderFlags) then
+                
+                informationDynamicLinkingSections.dynstr = self:_readSectionHeaderInformationByOffset(sectionHeaderOffset)
                 loopBreaks = loopBreaks + 1
             end
             if(LoopBreaks == 2) then
@@ -48,7 +53,6 @@ function ELFSectionHeaderTable:readInformationDynamicLinkingSections()
             sectionHeaderOffset = sectionHeaderOffset + self._sectionHeaderTableInformation.entsize
         end
     end
-
     return informationDynamicLinkingSections
 end
 
