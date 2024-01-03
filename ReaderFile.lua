@@ -1,9 +1,10 @@
-local ReaderFile = {}
-ReaderFile.mFile = nil
-ReaderFile.mBytesHandler = nil
+local ReaderFile = {
+    mFile = nil,
+    mBytesHandler = nil
+}
 
-function ReaderFile:new(filename, mode)
-    local object = {}
+function ReaderFile:new(object, filename, mode)
+    object = object or {}
     setmetatable(object, self)
     self.__index = self
     self.mFile = io.open(filename, mode)
@@ -36,6 +37,7 @@ end
 
 function ReaderFile:readInteger32FromOffset(offset)
     local buffer = self:readBufferFromOffset(offset, 4)
+    local bytes = {buffer:byte(1, -1)}
     return self.mBytesHandler:toInteger(bytes)
 end
 

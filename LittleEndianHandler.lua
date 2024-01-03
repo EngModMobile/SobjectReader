@@ -1,6 +1,13 @@
 local BytesHandler = require("BytesHandler")
 
-local LittleEndianHandler = BytesHandler
+local LittleEndianHandler = BytesHandler:new()
+
+function LittleEndianHandler:new(object)
+    object = object or BytesHandler:new(object)
+    setmetatable(object, self)
+    self.__index = self
+    return object
+end
 
 function LittleEndianHandler:toInteger(bytes)
     local result = 0

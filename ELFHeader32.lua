@@ -1,6 +1,12 @@
 local ELFHeader = require("ELFHeader")
+local ELFHeader32 = ELFHeader:new()
 
-local ELFHeader32 = ELFHeader
+function ELFHeader32:new(object, readerFile)
+    object = object or ELFHeader:new(object, readerFile)
+    setmetatable(object, self)
+    self.__index = self
+    return object
+end
 
 function ELFHeader32:readSectionHeaderTableInformation()
     local sectionHeaderTableInformation = {
