@@ -1,16 +1,12 @@
-local ELFSectionHeaderTable32 = require("ELFSectionHeaderTable32")
-local ELFSectionHeaderTable64 = require("ELFSectionHeaderTable64")
-local ELFHeader32 = require("ELFHeader32")
-local ELFHeader64 = require("ELFHeader64")
-local ReaderFile = require("ReaderFile")
-local BigEndianHandler = require("BigEndianHandler")
-local LittleEndianHandler = require("LittleEndianHandler")
+local SharedLibrarySymbol = require("SharedLibrarySymbol")
 
-local binPath = "/storage/emulated/0/libqplay.so"
-local readerFile = ReaderFile:new(nil, binPath, "r")
-readerFile:setBytesHandler(LittleEndianHandler:new())
-local header32 = ELFHeader32:new(nil, readerFile)
+print("Enter the shared library path:")
+local path = io.read()
 
-local sectionHeader32 = ELFSectionHeaderTable32:new(nil, readerFile, header32)
-local sections = sectionHeader32:readInformationDynamicLinkingSections()
-print(readerFile:readBufferFromOffset(sections.dynstr.offset, sections.dynstr.size))
+local symbolTable = SharedLibrarySymbol.create(path)
+
+for i = 1, #symbolTable do
+    for j, v in pairs(symbolTable[i]) do
+        print(j, v)
+    end
+end

@@ -1,19 +1,15 @@
-local ELFHeader = {
-    _readerFile = 2
-}
+local ELFHeader = {}
+ELFHeader._fileReader = nil
 
-function ELFHeader:new(object, readerFile)
+function ELFHeader:new(object, fileReader)
     object = object or {}
     setmetatable(object, self)
     self.__index = self
-    self._readerFile = readerFile
+    self._fileReader = fileReader
     return object
 end
 
 function ELFHeader:readSectionHeaderTableInformation()
 end
 
-
-
---print(header)
 return ELFHeader
