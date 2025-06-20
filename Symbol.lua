@@ -13,14 +13,14 @@ function Symbol:new(object, dynstr, symbolInformation)
     return object
 end
 
-function Symbol:mGetTypeSymbol(info)
-    local ST_TYPE = info & 0xf
-    if ST_TYPE == 0 then return "NOTYPE"
-    elseif ST_TYPE == 1 then return "OBJECT"
-    elseif ST_TYPE == 2 then return "FUNC"
-    elseif ST_TYPE == 3 then return "SECTION"
-    elseif ST_TYPE == 4 then return "FILE"
-    end
+function Symbol:mGetTypeSymbol(info)
+    local ST_TYPE = info & 0xf
+    if ST_TYPE == 0 then return "NOTYPE"
+    elseif ST_TYPE == 1 then return "OBJECT"
+    elseif ST_TYPE == 2 then return "FUNC"
+    elseif ST_TYPE == 3 then return "SECTION"
+    elseif ST_TYPE == 4 then return "FILE"
+    end
 end
 
 function Symbol:getSymbolTable()
